@@ -4,6 +4,8 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { store } from "./app/store";
 import "./index.css";
+import { RouterProvider } from "react-router-dom";
+import router from "./configs/routes";
 
 const container = document.getElementById("root");
 
@@ -12,6 +14,7 @@ if (container) {
 
 	root.render(
 		<React.StrictMode>
+			<RouterProvider router={router} />
 			<Provider store={store}>
 				<App />
 			</Provider>
