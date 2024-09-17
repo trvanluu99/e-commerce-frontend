@@ -6,6 +6,8 @@ import { store } from "./app/store";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./configs/routes";
+// The CssBaseline component helps to kickstart an elegant, consistent, and simple baseline to build upon (familiar with normalize.css).
+import { CssBaseline } from "@mui/material";
 
 const container = document.getElementById("root");
 
@@ -14,6 +16,7 @@ if (container) {
 
 	root.render(
 		<React.StrictMode>
+			<CssBaseline />
 			<RouterProvider router={router} />
 			<Provider store={store}>
 				<App />
