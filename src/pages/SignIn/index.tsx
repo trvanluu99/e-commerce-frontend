@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { signIn, selectUser } from "../../redux/slices/userSlice";
 
 // Validation schema using Yup
 const schema = yup.object().shape({
@@ -10,21 +12,26 @@ const schema = yup.object().shape({
 	password: yup
 		.string()
 		.min(6, "Password must be at least 6 characters")
-		.required("Password is required"),
+		.required("Password is required")
 });
 
 const SignIn = () => {
+	// States
+	const dispatch = useAppDispatch();
+	const user = useAppSelector(selectUser);
+
 	// Initialize useForm hook with yup validation schema
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors }
 	} = useForm({
-		resolver: yupResolver(schema),
+		resolver: yupResolver(schema)
 	});
 
 	const onSubmit = (data: any) => {
 		console.log("Form Data:", data);
+		dispatch(signIn());
 	};
 
 	return (
@@ -34,7 +41,7 @@ const SignIn = () => {
 					marginTop: 8,
 					display: "flex",
 					flexDirection: "column",
-					alignItems: "center",
+					alignItems: "center"
 				}}
 			>
 				<Typography component="h1" variant="h5">
@@ -63,6 +70,7 @@ const SignIn = () => {
 					</Button>
 				</Box>
 			</Box>
+			<Typography component="h1">User: {user}</Typography>
 		</Container>
 	);
 };
