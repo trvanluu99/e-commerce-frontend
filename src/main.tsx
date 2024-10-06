@@ -8,6 +8,8 @@ import { RouterProvider } from "react-router-dom";
 import router from "./configs/routes";
 // The CssBaseline component helps to kickstart an elegant, consistent, and simple baseline to build upon (familiar with normalize.css).
 import { CssBaseline } from "@mui/material";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const container = document.getElementById("root");
 
@@ -20,6 +22,7 @@ if (container) {
 			<Provider store={store}>
 				<RouterProvider router={router} />
 				<App />
+				<ToastContainer />
 			</Provider>
 		</React.StrictMode>
 	);

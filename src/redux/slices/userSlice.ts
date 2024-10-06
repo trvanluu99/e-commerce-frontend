@@ -2,6 +2,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../createAppSlice";
 import type { AppThunk } from "../store";
 import userApis from "../../apis/userApis";
+import { toast } from "react-toastify";
 
 export interface UserSliceState {
 	user: string;
@@ -25,6 +26,7 @@ export const userSlice = createAppSlice({
 				const response = await userApis.signIn();
 				// The value we return becomes the `fulfilled` action payload
 				console.log(response.data);
+				toast.success("Success full!")
 				
 				return response.data.title;
 			},
