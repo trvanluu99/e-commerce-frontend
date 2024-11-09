@@ -1,8 +1,8 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { counterSlice } from "../features/counter/counterSlice";
-import { quotesApiSlice } from "../features/quotes/quotesApiSlice";
+import { quotesApiSlice } from "../redux/slices/sliceForReference_quotesApiSlice";
+import { counterSlice } from "../redux/slices/sliceForReference_counterSlice";
 import { userSlice } from "./slices/userSlice";
 
 // `combineSlices` automatically combines the reducers using
@@ -21,7 +21,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
 		middleware: (getDefaultMiddleware) => {
 			return getDefaultMiddleware().concat(quotesApiSlice.middleware);
 		},
-		preloadedState,
+		preloadedState
 	});
 	// configure listeners using the provided defaults
 	// optional, but required for `refetchOnFocus`/`refetchOnReconnect` behaviors

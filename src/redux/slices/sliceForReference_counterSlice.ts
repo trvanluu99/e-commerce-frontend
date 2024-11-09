@@ -1,7 +1,13 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../redux/createAppSlice";
 import type { AppThunk } from "../../redux/store";
-import { fetchCount } from "./counterAPI";
+
+// A mock function to mimic making an async request for data
+export const fetchCount = (amount = 1) => {
+	return new Promise<{ data: number }>((resolve) =>
+		setTimeout(() => resolve({ data: amount }), 500)
+	);
+};
 
 export interface CounterSliceState {
 	value: number;
@@ -10,7 +16,7 @@ export interface CounterSliceState {
 
 const initialState: CounterSliceState = {
 	value: 0,
-	status: "idle",
+	status: "idle"
 };
 
 // If you are not using async thunks you can use the standalone `createSlice`.
@@ -55,16 +61,16 @@ export const counterSlice = createAppSlice({
 				},
 				rejected: (state) => {
 					state.status = "failed";
-				},
-			},
-		),
+				}
+			}
+		)
 	}),
 	// You can define your selectors here. These selectors receive the slice
 	// state as their first argument.
 	selectors: {
 		selectCount: (counter) => counter.value,
-		selectStatus: (counter) => counter.status,
-	},
+		selectStatus: (counter) => counter.status
+	}
 });
 
 // Action creators are generated for each case reducer function.
