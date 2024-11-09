@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { TextField, Button, Box, Typography, Container } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { signIn, selectUser } from "../../redux/slices/userSlice";
+import { signIn, selectUser, selectApiResStatus } from "../../redux/slices/userSlice";
+import { SignInData } from "../../interfaces/user";
+import { toast } from "react-toastify";
 
 // Validation schema using Yup
 const schema = yup.object().shape({
-	email: yup.string().email("Enter a valid email").required("Email is required"),
+	username: yup.string().required("Username is required"),
 	password: yup
 		.string()
-		.min(6, "Password must be at least 6 characters")
+		.min(3, "Password must be at least 3 characters")
 		.required("Password is required")
 });
 
@@ -19,6 +21,7 @@ const SignIn = () => {
 	// States
 	const dispatch = useAppDispatch();
 	const user = useAppSelector(selectUser);
+	const userApiResStatus = useAppSelector(selectApiResStatus);
 
 	// Initialize useForm hook with yup validation schema
 	const {
@@ -29,9 +32,16 @@ const SignIn = () => {
 		resolver: yupResolver(schema)
 	});
 
-	const onSubmit = (data: any) => {
-		console.log("Form Data:", data);
-		dispatch(signIn());
+	// useEffect hooks
+	useEffect(() => {
+		if (userApiResStatus === "failed") {
+			toast.error("Sign in failed!");
+		}
+	}, [userApiResStatus]);
+
+	// Functions
+	const onSubmit = (signInData: SignInData) => {
+		dispatch(signIn(signInData));
 	};
 
 	return (
@@ -51,10 +61,10 @@ const SignIn = () => {
 					<TextField
 						margin="normal"
 						fullWidth
-						label="Email Address"
-						{...register("email")}
-						error={!!errors.email}
-						helperText={errors.email?.message}
+						label="Username"
+						{...register("username")}
+						error={!!errors.username}
+						helperText={errors.username?.message}
 					/>
 					<TextField
 						margin="normal"

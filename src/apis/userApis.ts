@@ -1,10 +1,11 @@
 import axiosClient from "../configs/axiosClient";
+import { SignInData } from "../interfaces/user";
 
 const userApis = {
-	async signIn() {
+	async signIn(signInData: SignInData) {
 		return await axiosClient.post(`/auth/signin`, {
-			username: "trvanluu99@gmail.com",
-			password: "123456"
+			username: signInData.username,
+			password: signInData.password
 		});
 	}
 };
